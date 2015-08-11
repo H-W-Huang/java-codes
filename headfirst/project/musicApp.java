@@ -44,7 +44,7 @@ public class musicApp {
             //1.play(77);
             //hread.sleep(380);
             //1.play(74);
-
+76,77,79,76,74,79,76,72,76,77,74
             /****birthday song  ***/
             // m1.play(72);
             // Thread.sleep(200);
