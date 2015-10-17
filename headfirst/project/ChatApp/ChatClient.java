@@ -8,10 +8,11 @@ import java.net.*;
 public class ChatClient{
     JTextField field;
     JTextArea area;
+    Socket s;
+    BufferedReader reader;
+    PrintWriter writer ;
 
-
-
-    public static void main(String[] args) {
+   public static void main(String[] args) {
         ChatClient client = new ChatClient();
         client.go();
     }
@@ -19,10 +20,21 @@ public class ChatClient{
 
 
     void go(){
-        // setConnection();
+        setupNetwork();
         setupGUI();
     }
 
+    void setupNetwork(){
+        try{    
+            s = new Socket("172.0.0.1",4848);
+            InputStreamReader stream = new InputStreamReader(s.getInputStream());
+            reader = new BufferedReader(stream);
+            writer = new PrintWriter(s.getOutputStream());
+            System.out.println("Nework founded!"); 
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
 
 
 
@@ -61,9 +73,10 @@ public class ChatClient{
     void getInformation(){
         String line = null;
         try{    
-            Socket s = new Socket("172.0.0.1",4848);
+            s = new Socket("172.0.0.1",4848);
             InputStreamReader stream = new InputStreamReader(s.getInputStream());
-            BufferedReader reader = new BufferedReader(stream);
+            reader = new BufferedReader(stream);
+
             line = reader.readLine();
             area.append(line);
             reader.close();
@@ -75,10 +88,8 @@ public class ChatClient{
     void sendMessage(){
         String msg = field.getText();
         try{
-            Socket s = new Socket("127.0.0.1",4848);
-            PrintWriter writer = new PrintWriter(s.getOutputStream());
             writer.println(msg);
-            writer.close();
+            writer.flush();
         }catch(Exception ex)
         {
             ex.printStackTrace();

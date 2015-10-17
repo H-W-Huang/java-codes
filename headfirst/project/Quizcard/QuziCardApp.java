@@ -86,13 +86,11 @@ public class QuziCardApp{
         scroller1 = new JScrollPane(area1);
         scroller1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scroller1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
         JPanel panel2 = new JPanel();
         panel2.setLayout(new BorderLayout());
         scroller2 = new JScrollPane(area2);
         scroller2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scroller2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
         panel1.add(BorderLayout.NORTH,qunestion);
         panel2.add(BorderLayout.NORTH,answer);
         panel1.add(BorderLayout.CENTER,scroller1);
