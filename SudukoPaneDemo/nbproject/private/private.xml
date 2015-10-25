@@ -4,10 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/F:/java%20demos/SudukoPaneDemo/src/sudukopanedemo/SudokuPaneDemo.java</file>
-            <file>file:/F:/java%20demos/SudukoPaneDemo/src/sudukopanedemo/DataStorage.java</file>
             <file>file:/F:/java%20demos/SudukoPaneDemo/src/sudukopanedemo/test.css</file>
+            <file>file:/F:/java%20demos/SudukoPaneDemo/src/sudukopanedemo/SudokuTextField.java</file>
+            <file>file:/F:/java%20demos/SudukoPaneDemo/src/sudukopanedemo/SudokuData.java</file>
             <file>file:/F:/java%20demos/SudukoPaneDemo/src/sudukopanedemo/SudokuPane.java</file>
-            <file>file:/F:/java%20demos/SudukoPaneDemo/src/sudukopanedemo/ControlBox.java</file>
         </group>
     </open-files>
 </project-private>

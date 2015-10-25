@@ -1,15 +1,29 @@
-TextField{
+Scene{
+    background-color: white;
+}
+
+
+SudokuTextField{
     -fx-font-size: 20px;
     -fx-font-weight: bolder;
-    -fx-color: red;
-    -fx-border: 4px;
-    -fx-border-radius: 10px;
+    -fx-border-color: grey;
+    -fx-border-radius: 8px;
+    -fx-padding: 8px 8px 8px 8px;
     
 }
+
+/*Button{
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-background-color: #ccccff;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}*/
 
 Button{
     -fx-font-size: 22px;
     -fx-font-weight: bold;
+    -fx-background-image:url("images/button-bg.png");
     -fx-background-color: #ccccff;
-    /*-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );*/
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+     
 }
