@@ -128,7 +128,9 @@ class SudokuPane extends BorderPane {
         inputValue = Integer.parseInt(tempbtn.getText());
         buttonValue = Integer.parseInt(tempbtn.getText());
         tempbtn.setStyle(""
-                + "-fx-background-color:#858585 ");
+                + "-fx-text-fill "
+                + ""
+                + ":#858585 ");
         System.out.println("选中了 " + inputValue);
     }
 
