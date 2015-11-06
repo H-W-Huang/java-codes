@@ -2,6 +2,13 @@ package sudukopanedemo;
 
 import javafx.scene.control.TextField;
 
+/**
+ * SudokuTextField作为TextField的子类
+ * 仅仅添加了行（row）和列（col）两项
+ * 方便获取位置
+ * 
+ * @author H.W
+ */
 public class SudokuTextField extends TextField {
 
     private int row = 0;

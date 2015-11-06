@@ -1,0 +1,39 @@
+Scene{
+    -fx-background-color: white;
+    
+}
+
+SudokuPane{
+    -fx-background-image: url("images/main-background.jpg") ;
+}
+
+
+SudokuTextField{
+    -fx-font-size: 20px;
+    -fx-font-weight: bolder;
+    -fx-border-color: grey;
+    -fx-border-radius: 8px;
+    -fx-padding: 8px 8px 8px 8px;
+    /*-fx-background-image: url("images/pane-background.jpg");*/
+}
+
+/*Button{
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-background-color: #ccccff;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}*/
+
+SudokuPane Button{
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-background-image:url("images/button-bg.jpg");
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 0, 0.0 , 0 ,0 );
+     
+}
+
+TimePane label{
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}

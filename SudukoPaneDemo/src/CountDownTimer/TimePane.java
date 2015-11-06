@@ -19,19 +19,24 @@ public class TimePane extends GridPane {
     private int minute = 0;
     private int second = 0;
 //    private int totalSec = 0;
-    Label label = new Label("所用时间：");
-    Label hourLab = new Label(hour + " : ");
-    Label minLab = new Label(minute + " : ");
-    Label secLab = new Label(second + " ");
+    private Label label = new Label("所用时间：");
+    private Label hourLab = new Label(hour + " : ");
+    private Label minLab = new Label(minute + " : ");
+    private Label secLab = new Label(second + " ");
 
+    
     public TimePane() {
         this.add(label,0,0);
         this.add(hourLab, 1, 0);
         this.add(minLab, 2, 0);
         this.add(secLab, 3, 0);
-        GridPane.setMargin(label,new Insets(10,10,10,145));
+        GridPane.setMargin(label,new Insets(10,10,10,85));
     }
 
+    /**
+     * 设置时间的方法，在动画处理器（handler）中被调用
+     * @param totalSec 
+     */
     public void setTime(int totalSec) {
         getChildren().clear(); //清除原有的
         hour = totalSec / 3600;
