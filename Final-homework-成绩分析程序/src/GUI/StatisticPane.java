@@ -32,8 +32,8 @@ public class StatisticPane extends GridPane {
     private Label[] label = new Label[5];
     private Label[] percentage = new Label[5];
     private TextField[] percentageField = new TextField[5];
-    private Button displayBarChart;
-    private Button displayPieChart;
+    private Button displayBarChartBtn;
+    private Button displayPieChartBtn;
     private TextField[] SpecialScoresField = new TextField[3];  //特殊分数，包括最高分，最低分，平均分）
     private TextField[] ScoreLevelsField = new TextField[5];
 
@@ -62,13 +62,22 @@ public class StatisticPane extends GridPane {
             percentageField[i].setEditable(false);
         }
 
-        displayBarChart = new Button("显示柱状分析图");
-        displayPieChart = new Button("显示饼状分析图");
+        displayBarChartBtn = new Button("显示柱状分析图");
+        displayPieChartBtn = new Button("显示饼状分析图");
 
+        displayBarChartBtn.setOnAction(e->{
+           this.drawBarChart();
+        });
+        
+        displayPieChartBtn.setOnAction(e->{
+            this.getPieChart();
+        });
     }
 
     public StatisticPane() {
         scoreData = new Score();
+        
+        
         this.add(SpecialScores[0], 0, 1);
         this.add(SpecialScores[1], 0, 2);
         this.add(SpecialScores[2], 0, 3);
@@ -100,8 +109,8 @@ public class StatisticPane extends GridPane {
         this.add(percentageField[2], 3, 6);
         this.add(percentageField[3], 3, 7);
         this.add(percentageField[4], 3, 8);
-        this.add(displayBarChart, 0, 11);
-        this.add(displayPieChart, 1, 11);
+        this.add(displayBarChartBtn, 0, 11);
+        this.add(displayPieChartBtn, 1, 11);
 
         this.setPadding(new Insets(10, 20, 20, 20));
         this.setHgap(10);
@@ -147,7 +156,13 @@ public class StatisticPane extends GridPane {
         return data;
     }
 
-    public void addData(File file, int type) throws IOException {
+    /**
+     * 显示来自文件的数据的统计结果
+     * @param file
+     * @param type
+     * @throws IOException 
+     */
+    public void displayDataFromFile(File file, int type) throws IOException {
         if (file != null) {
             if (type == TEXT_FILE) {
                 scoreData = new Score(readFileContent(file, TEXT_FILE));
@@ -168,6 +183,15 @@ public class StatisticPane extends GridPane {
         } else {
 
         }
+    }
+    
+    
+    private void drawBarChart(){
+        scoreData.getBarChart();
+    }
+    
+    private void getPieChart(){
+        scoreData.getPieChart();
     }
 }
 

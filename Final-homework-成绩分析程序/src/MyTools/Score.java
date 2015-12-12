@@ -9,6 +9,25 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.Chart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  *
@@ -96,9 +115,13 @@ public class Score {
     public void statistic() {
 
         //寻找最大值,最小值
-        for (Integer n: scores){
-            if(getMax() < n) max = n;
-            if(getMin() > n) min = n;     
+        for (Integer n : scores) {
+            if (getMax() < n) {
+                max = n;
+            }
+            if (getMin() > n) {
+                min = n;
+            }
         }
 
         for (int n : scores) {
@@ -115,8 +138,65 @@ public class Score {
             }
         }
         for (int i = 0; i < getScoreInterval().length; i++) {
-            percentageInterval[i] = (getScoreInterval()[i]*1.0 / getSize())*100;
+            percentageInterval[i] = (getScoreInterval()[i] * 1.0 / getSize()) * 100;
         }
+    }
+
+    /**
+     * 绘制成绩分布直方图
+     */
+    public void getBarChart() {
+        
+        double upperBound =  0;
+        final String[] intervalLabel = {"0-59", "60-69", "70-79", "80-89", "90-100"};
+        double[] data = getPercentageInterval();
+        //使用BarChart,需要两个轴，NumberAxis 和 CategoryAxis 
+        NumberAxis yAxis = new NumberAxis(0, upperBound, 10);        //y轴
+        CategoryAxis xAxis = new CategoryAxis();    //x轴
+
+        //Number类型：The abstract class Number is the superclass of platform 
+        //classes representing numeric values that are convertible to the primitive 
+        //types byte, double, float, int, long, and short.注意是抽象的
+        BarChart<String, Number> barChart = new BarChart<String, Number>(xAxis, yAxis);
+        barChart.setTitle("成绩分布直方图");
+        
+        
+        yAxis.setLabel("百分比");
+        xAxis.setLabel("成绩区间");
+        XYChart.Series series = new XYChart.Series();    //XYChart.Series也是一个数据结构
+
+        for (int i = 0; i < data.length; i++) {
+            if(Math.ceil(data[i])> upperBound ) upperBound = Math.ceil(data[i])+5;
+            series.getData().add(new XYChart.Data(intervalLabel[4 - i], data[i]));
+        }
+        
+        yAxis.setUpperBound(upperBound);
+
+        barChart.getData().addAll(series);
+
+        Scene scene = new Scene(barChart, 500, 500);
+        Stage stage = new Stage();
+        stage.setTitle("测试");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void getPieChart() {
+
+        PieChart pc = new PieChart();
+        final String[] intervalLabel = {"0-59", "60-69", "70-79", "80-89", "90-100"};
+        double[] data = getPercentageInterval();
+
+        for (int i = 0; i < data.length; i++) {
+            pc.getData().add(new PieChart.Data(intervalLabel[4 - i], data[i]));
+        }
+
+        Scene scene = new Scene(pc, 500, 500);
+        Stage stage = new Stage();
+        stage.setTitle("测试");
+        stage.setScene(scene);
+        stage.show();
+
     }
 
 }

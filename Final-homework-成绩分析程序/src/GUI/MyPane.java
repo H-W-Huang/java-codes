@@ -16,6 +16,7 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -24,6 +25,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -44,6 +46,7 @@ public class MyPane extends BorderPane {
     final private int FILE_READING_SAVING_STATE = 4; //文件读取状态
 
     private TextField searchBar;  //搜索框
+    private String keyword4Search;
     private MenuBar menuBar;      //菜单栏
     private Label ScoreLabel;
     private Label StatisticLabel;
@@ -61,17 +64,35 @@ public class MyPane extends BorderPane {
         menuBar = setUpMenuBar();
         searchBar = new TextField();
 
+        /**
+         * 添加组件动作*
+         */
+        //搜索栏动作
+        searchBar.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                keyword4Search = searchBar.getText();
+                search(keyword4Search);
+                System.out.println(keyword4Search);
+                extraInfo = generateExtraInfo(file);
+                this.setBottom(extraInfo);
+            }
+        });
+
+        /**
+         * 样式修饰*
+         */
         Font font1 = Font.font("", FontWeight.BOLD, 24);
         Font font2 = Font.font("", FontWeight.BOLD, 24);
         ScoreLabel.setFont(font1);
         StatisticLabel.setFont(font2);
 
+        /**
+         * 添加板块并定位*
+         */
         Top.setTop(menuBar);
         Top.setLeft(searchBar);
-
         left.getChildren().add(ScoreLabel);
         left.getChildren().add(scoreListPane);
-
         this.setTop(Top);
         this.setRight(new VBox(StatisticLabel, statisticPane));
         this.setLeft(left);
@@ -113,8 +134,8 @@ public class MyPane extends BorderPane {
             file = OpenFile(TEXT_FILE);
             try {
                 if (file != null) {
-                    scoreListPane.addData(file, TEXT_FILE);
-                    statisticPane.addData(file, TEXT_FILE);
+                    scoreListPane.displayDataFromFile(file, TEXT_FILE);
+                    statisticPane.displayDataFromFile(file, TEXT_FILE);
                     extraInfo = generateExtraInfo(file);
                     this.setBottom(extraInfo);
                 }
@@ -135,8 +156,8 @@ public class MyPane extends BorderPane {
             file = OpenFile(BINARY_FILE);
             try {
                 if (file != null) {
-                    scoreListPane.addData(file, BINARY_FILE);
-                    statisticPane.addData(file, BINARY_FILE);
+                    scoreListPane.displayDataFromFile(file, BINARY_FILE);
+                    statisticPane.displayDataFromFile(file, BINARY_FILE);
                     extraInfo = generateExtraInfo(file);
                     this.setBottom(extraInfo);
                 }
@@ -205,21 +226,35 @@ public class MyPane extends BorderPane {
                 } catch (FileNotFoundException ex) {
                     generateAlert(FILE_NOT_FOUND);
                 }
+                generateAlert(FILE_READING_SAVING_STATE);
             } //二进制文件的情况
             //将这个ArrayList写入文件...
             else {
                 try (ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(temp)))) {
                     oos.writeObject(data);
-                    System.out.println("写出成功");
+
                 } catch (FileNotFoundException ex) {
                     generateAlert(FILE_NOT_FOUND);
                 } catch (IOException ex) {
                     generateAlert(FILE_ERROR);
 
                 }
+                generateAlert(FILE_READING_SAVING_STATE);
             }
         }
+    }
 
+    /**
+     * 搜索数据的方法，在searchBar(TextField)中被调用
+     *
+     * @param keyword
+     */
+    private void search(String keyword) {
+        if (file != null) {
+            scoreListPane.searchData(keyword);
+        } else {
+            generateAlert(FILE_NOT_FOUND);
+        }
     }
 
     /**
@@ -235,7 +270,7 @@ public class MyPane extends BorderPane {
 
         if (file != null) {
             location = file.getPath();
-            result.setText(location + "  共" + statisticPane.getScoreData().getSize() + "人");
+            result.setText(location + "  共" + statisticPane.getScoreData().getSize() + "人," + "显示了" + scoreListPane.getItemsSize() + "人");
         }
         result.setPadding(new Insets(10, 0, 10, 15));
         return result;
@@ -270,4 +305,5 @@ public class MyPane extends BorderPane {
         }
         alert.show();
     }
+
 }

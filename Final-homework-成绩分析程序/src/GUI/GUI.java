@@ -30,6 +30,9 @@ public class GUI extends Application {
 
         MyPane pane = new MyPane();
         Scene scene = new Scene(pane, 1080, 780);
+        
+        Stage seconStage  = new Stage();
+        
         primaryStage.setResizable(false);
         primaryStage.setTitle("成绩分析程序");
         primaryStage.setScene(scene);

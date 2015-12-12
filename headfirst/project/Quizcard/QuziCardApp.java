@@ -145,6 +145,8 @@ public class QuziCardApp{
         JMenu  aboutMienu = new JMenu("About");
         JMenuItem newMenuItem  = new JMenuItem("New");
         JMenuItem saveMenuItem  = new JMenuItem("Save");
+
+        JMenu  aboutMienu = new JMenu("About");
         fileMenu.add(newMenuItem);
         fileMenu.add(saveMenuItem);
         bar.add(fileMenu);
