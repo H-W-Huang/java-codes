@@ -31,6 +31,8 @@ public class GUI extends Application {
         MyPane pane = new MyPane();
         Scene scene = new Scene(pane, 1080, 780);
         
+        
+//        System.out.println(getClass().getResource("css/style1.css").toExternalForm());
         Stage seconStage  = new Stage();
         
         primaryStage.setResizable(false);

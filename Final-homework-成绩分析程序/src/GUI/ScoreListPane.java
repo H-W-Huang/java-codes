@@ -52,6 +52,9 @@ public class ScoreListPane extends Pane {
         nameCol.prefWidthProperty().bind(table.widthProperty().multiply(0.33));
         scoreCol.prefWidthProperty().bind(table.widthProperty().multiply(0.33));
         this.getChildren().add(table);
+
+//        this.getStylesheets().add(getClass().getResource("css/style1.css").toExternalForm());
+
     }
 
     /**
@@ -92,7 +95,7 @@ public class ScoreListPane extends Pane {
     private void readFileContent(File file, int type) throws FileNotFoundException, IOException {
         if (file != null) {
             if (type == TEXT_FILE) {
-                Scanner input = new Scanner(file);
+                Scanner input = new Scanner(file, "UTF-8");
                 while (input.hasNext()) {
                     String[] studentData = input.nextLine().split(",");
                     dataFromFile.add(new Student4GUI(studentData[0], studentData[1], Integer.parseInt(studentData[2])));

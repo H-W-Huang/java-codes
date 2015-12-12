@@ -17,15 +17,20 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class StatisticPane extends GridPane {
 
     final private int TEXT_FILE = 0;
     final private int BINARY_FILE = 1;
+
+    private Stage Stage4barChart = new Stage();
+    private Stage Stage4PieChart = new Stage();
     private Score scoreData;
     private Label[] SpecialScores = new Label[3];  //特殊分数，包括最高分，最低分，平均分）
     private Label[] ScoreLevels = new Label[5];   //分数分布--标签
@@ -38,6 +43,9 @@ public class StatisticPane extends GridPane {
     private TextField[] ScoreLevelsField = new TextField[5];
 
     {
+        Stage4barChart.setTitle("直方图");
+        Stage4PieChart.setTitle("饼图");
+
         SpecialScores[0] = new Label("最高分");
         SpecialScores[1] = new Label("最低分");
         SpecialScores[2] = new Label("平均分");
@@ -63,21 +71,21 @@ public class StatisticPane extends GridPane {
         }
 
         displayBarChartBtn = new Button("显示柱状分析图");
+        displayBarChartBtn.setId("displayBarChartBtn");
         displayPieChartBtn = new Button("显示饼状分析图");
 
-        displayBarChartBtn.setOnAction(e->{
-           this.drawBarChart();
+        displayBarChartBtn.setOnAction(e -> {
+            this.drawBarChart();
         });
-        
-        displayPieChartBtn.setOnAction(e->{
+
+        displayPieChartBtn.setOnAction(e -> {
             this.getPieChart();
         });
     }
 
     public StatisticPane() {
         scoreData = new Score();
-        
-        
+
         this.add(SpecialScores[0], 0, 1);
         this.add(SpecialScores[1], 0, 2);
         this.add(SpecialScores[2], 0, 3);
@@ -117,6 +125,7 @@ public class StatisticPane extends GridPane {
         this.setVgap(25);
         this.setAlignment(Pos.CENTER);
 
+//        this.getStylesheets().add(getClass().getResource("css/style1.css").toExternalForm());
     }
 
     /**
@@ -135,7 +144,7 @@ public class StatisticPane extends GridPane {
     private ArrayList<Integer> readFileContent(File file, int type) throws FileNotFoundException, IOException {
         ArrayList<Integer> data = new ArrayList<>();
         if (type == TEXT_FILE) {
-            Scanner input = new Scanner(file);
+            Scanner input = new Scanner(file, "UTF-8");
             while (input.hasNext()) {
                 String[] studentData = input.nextLine().split(",");
                 data.add(Integer.parseInt(studentData[2]));
@@ -158,9 +167,10 @@ public class StatisticPane extends GridPane {
 
     /**
      * 显示来自文件的数据的统计结果
+     *
      * @param file
      * @param type
-     * @throws IOException 
+     * @throws IOException
      */
     public void displayDataFromFile(File file, int type) throws IOException {
         if (file != null) {
@@ -184,18 +194,19 @@ public class StatisticPane extends GridPane {
 
         }
     }
-    
-    
-    private void drawBarChart(){
-        scoreData.getBarChart();
+
+    private void drawBarChart() {
+        Stage4barChart.close();
+        Stage4barChart.setScene(new Scene(scoreData.getBarChart(), 500, 500));
+        Stage4barChart.show();
     }
-    
-    private void getPieChart(){
-        scoreData.getPieChart();
+
+    private void getPieChart() {
+        Stage4barChart.close();
+        Stage4barChart.setScene(new Scene(scoreData.getPieChart(), 500, 500));
+        Stage4barChart.show();
     }
 }
-
-
 
 /**
  * 该类读取文件有两种方式，是一种是在构造对象是一起读入 另一种是另外提供一个file

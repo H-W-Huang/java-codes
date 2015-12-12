@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javafx.event.EventHandler;
@@ -44,6 +45,7 @@ public class MyPane extends BorderPane {
     final private int FILE_NOT_FOUND = 2;  //找不到文件
     final private int FILE_ERROR = 3;      //文件错误
     final private int FILE_READING_SAVING_STATE = 4; //文件读取状态
+    final private int ENCODING_ERROR = 5;
 
     private TextField searchBar;  //搜索框
     private String keyword4Search;
@@ -60,7 +62,9 @@ public class MyPane extends BorderPane {
         VBox left = new VBox();
         extraInfo = generateExtraInfo(file);
         ScoreLabel = new Label("成绩单");
+        ScoreLabel.setId("ScoreLabel");
         StatisticLabel = new Label("成绩统计");
+        StatisticLabel.setId("StatisticLabel");
         menuBar = setUpMenuBar();
         searchBar = new TextField();
 
@@ -112,11 +116,14 @@ public class MyPane extends BorderPane {
     public MenuBar setUpMenuBar() {
         MenuBar menuBar = new MenuBar();
         Menu menuFile = new Menu("文件");
+        Menu menuTheme = new Menu("主题");
         MenuItem open = new MenuItem("打开文本文件成绩单");
         MenuItem save = new MenuItem("另存为文本文件成绩单");
         MenuItem openObjectFile = new MenuItem("打开对象文件成绩单");
         MenuItem saveObjectFile = new MenuItem("另存为对象文件成绩单");
         MenuItem exit = new MenuItem("退出");
+        MenuItem defaultTheme = new MenuItem("无");
+        MenuItem blueTheme = new MenuItem("蓝色");
         menuFile.getItems().add(open);
         menuFile.getItems().add(save);
         menuFile.getItems().add(new SeparatorMenuItem());
@@ -124,7 +131,10 @@ public class MyPane extends BorderPane {
         menuFile.getItems().add(saveObjectFile);
         menuFile.getItems().add(new SeparatorMenuItem());
         menuFile.getItems().add(exit);
+        menuTheme.getItems().add(defaultTheme);
+        menuTheme.getItems().add(blueTheme);
         menuBar.getMenus().add(menuFile);
+        menuBar.getMenus().add(menuTheme);
 
         /**
          * 添加事件处理器 *
@@ -178,6 +188,14 @@ public class MyPane extends BorderPane {
             exit();
         });
 
+        defaultTheme.setOnAction(e -> {
+            this.getStylesheets().clear();
+        });
+
+        blueTheme.setOnAction(e -> {
+            this.getStylesheets().add(getClass().getResource("css/blue.css").toExternalForm());
+        });
+
         return menuBar;
     }
 
@@ -217,13 +235,15 @@ public class MyPane extends BorderPane {
         //文本文件的情况
         if (temp != null) {
             if (type == TEXT_FILE) {
-                try (PrintWriter input = new PrintWriter(temp);) {
+                try (PrintWriter input = new PrintWriter(temp, "UTF-8");) {
                     for (Student4GUI s : data) {
                         System.out.println("写入学生：" + s);
                         input.write(s.getSchoolId() + "," + s.getName() + "," + s.getScore() + "");
                         input.println();
                     }
                 } catch (FileNotFoundException ex) {
+                    generateAlert(FILE_NOT_FOUND);
+                } catch (UnsupportedEncodingException ex) {
                     generateAlert(FILE_NOT_FOUND);
                 }
                 generateAlert(FILE_READING_SAVING_STATE);
@@ -250,11 +270,8 @@ public class MyPane extends BorderPane {
      * @param keyword
      */
     private void search(String keyword) {
-        if (file != null) {
-            scoreListPane.searchData(keyword);
-        } else {
-            generateAlert(FILE_NOT_FOUND);
-        }
+        scoreListPane.searchData(keyword);
+
     }
 
     /**
@@ -299,6 +316,9 @@ public class MyPane extends BorderPane {
                 break;
             case FILE_ERROR:
                 alert.setContentText("文件错误");
+                break;
+            case ENCODING_ERROR:
+                alert.setContentText("编码错误，写出失败");
                 break;
             default:
                 alert.setContentText("出现了一些奇怪的问题!");

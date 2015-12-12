@@ -5,29 +5,15 @@
  */
 package MyTools;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+
 import java.util.ArrayList;
-import java.util.Scanner;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.Chart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 /**
  *
@@ -35,6 +21,8 @@ import javafx.util.Duration;
  */
 public class Score {
 
+
+    
     private ArrayList<Integer> scores = new ArrayList<>();
     private int max = 0;
     private int min = 101;
@@ -145,7 +133,7 @@ public class Score {
     /**
      * 绘制成绩分布直方图
      */
-    public void getBarChart() {
+    public BarChart<String, Number> getBarChart() {
         
         double upperBound =  0;
         final String[] intervalLabel = {"0-59", "60-69", "70-79", "80-89", "90-100"};
@@ -174,15 +162,11 @@ public class Score {
 
         barChart.getData().addAll(series);
 
-        Scene scene = new Scene(barChart, 500, 500);
-        Stage stage = new Stage();
-        stage.setTitle("测试");
-        stage.setScene(scene);
-        stage.show();
+        return barChart;
     }
 
-    public void getPieChart() {
-
+    public PieChart getPieChart() {
+        
         PieChart pc = new PieChart();
         final String[] intervalLabel = {"0-59", "60-69", "70-79", "80-89", "90-100"};
         double[] data = getPercentageInterval();
@@ -190,13 +174,10 @@ public class Score {
         for (int i = 0; i < data.length; i++) {
             pc.getData().add(new PieChart.Data(intervalLabel[4 - i], data[i]));
         }
-
-        Scene scene = new Scene(pc, 500, 500);
-        Stage stage = new Stage();
-        stage.setTitle("测试");
-        stage.setScene(scene);
-        stage.show();
-
+        
+        return pc;
     }
-
+    
+    
+    
 }

@@ -7,13 +7,12 @@ package MyTools;
 
 import java.io.Serializable;
 
-
-
 /**
  *
  * @author H.W
  */
-public class Student4GUI implements Comparable<Student4GUI>,Serializable {
+public class Student4GUI implements Comparable<Student4GUI>, Serializable {
+
     private String schoolId;
     private String name;
     private int score;
@@ -23,25 +22,36 @@ public class Student4GUI implements Comparable<Student4GUI>,Serializable {
         this.name = name;
         this.score = score;
     }
+
+    @Override
+    public String toString() {
+        String result = schoolId + " " + name + " " + score + "";
+        return result;
+    }
+
+    ;
+    
     
     @Override
-    public String toString(){
-        String result = schoolId +" "+ name +" "+ score +"";
-        return result;
-    };
-    
-    
-    @Override 
-    public int compareTo(Student4GUI another){
-        if(this.score > another.score){
+    public int compareTo(Student4GUI another) {
+        if (this.score > another.score) {
             return 1;
+        } else if (this.score < another.score) {
+            return -1;
+        } else {
+            if (this.schoolId.compareTo(another.schoolId) > 0) {
+                return 1;
+            } else if (this.schoolId.compareTo(another.schoolId) == 0) {
+                return -1;
+            } else {
+                return 0;
+            }
         }
-        else if(this.score < another.score) return -1;
-        else return 0;
     }
-    
-    /*********getter and settet ***********************/
 
+    /**
+     * *******getter and settet **********************
+     */
     /**
      * @return the schoolId
      */
@@ -84,6 +94,7 @@ public class Student4GUI implements Comparable<Student4GUI>,Serializable {
         this.score = score;
     }
 
-    /*********getter and settet| END ***********************/
-    
+    /**
+     * *******getter and settet| END **********************
+     */
 }
