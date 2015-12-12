@@ -44,61 +44,61 @@ public class musicApp {
             //1.play(77);
             //hread.sleep(380);
             //1.play(74);
-76,77,79,76,74,79,76,72,76,77,74
+// 76,77,79,76,74,79,76,72,76,77,74
             /****birthday song  ***/
-            // m1.play(72);
-            // Thread.sleep(200);
-            // m1.play(72);
-            // Thread.sleep(200);
-            // m1.play(74);
-            // Thread.sleep(400);
-            // m1.play(72);
-            // Thread.sleep(400);
-            // m1.play(77);
-            // Thread.sleep(400);
-            // m1.play(76);
+            m1.play(72);
+            Thread.sleep(200);
+            m1.play(72);
+            Thread.sleep(200);
+            m1.play(74);
+            Thread.sleep(400);
+            m1.play(72);
+            Thread.sleep(400);
+            m1.play(77);
+            Thread.sleep(400);
+            m1.play(76);
 
-            // Thread.sleep(800);
-            // m2.play(72);
-            // Thread.sleep(200);
-            // m2.play(72);
-            // Thread.sleep(200);
-            // m2.play(74);
-            // Thread.sleep(400);
-            // m2.play(72);
-            // Thread.sleep(400);
-            // m2.play(79);
-            // Thread.sleep(400);
-            // m2.play(77);
+            Thread.sleep(800);
+            m2.play(72);
+            Thread.sleep(200);
+            m2.play(72);
+            Thread.sleep(200);
+            m2.play(74);
+            Thread.sleep(400);
+            m2.play(72);
+            Thread.sleep(400);
+            m2.play(79);
+            Thread.sleep(400);
+            m2.play(77);
             
 
-            // Thread.sleep(800);
-            // m2.play(72);
-            // Thread.sleep(200);
-            // m2.play(72);
-            // Thread.sleep(200);
-            // m2.play(84);
-            // Thread.sleep(400);
-            // m2.play(81);
-            // Thread.sleep(400);
-            // m2.play(77);
-            // Thread.sleep(400);
-            // m2.play(76);
-            // Thread.sleep(400);
-            // m2.play(74);
+            Thread.sleep(800);
+            m2.play(72);
+            Thread.sleep(200);
+            m2.play(72);
+            Thread.sleep(200);
+            m2.play(84);
+            Thread.sleep(400);
+            m2.play(81);
+            Thread.sleep(400);
+            m2.play(77);
+            Thread.sleep(400);
+            m2.play(76);
+            Thread.sleep(400);
+            m2.play(74);
 
-            // Thread.sleep(1200);
-            // m2.play(82);
-            // Thread.sleep(200);
-            // m2.play(82);
-            // Thread.sleep(200);
-            // m2.play(81);
-            // Thread.sleep(400);
-            // m2.play(77);
-            // Thread.sleep(400);
-            // m2.play(79);
-            // Thread.sleep(400);
-            // m1.play(77);
+            Thread.sleep(1200);
+            m2.play(82);
+            Thread.sleep(200);
+            m2.play(82);
+            Thread.sleep(200);
+            m2.play(81);
+            Thread.sleep(400);
+            m2.play(77);
+            Thread.sleep(400);
+            m2.play(79);
+            Thread.sleep(400);
+            m1.play(77);
 
             /******************/
 
