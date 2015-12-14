@@ -202,9 +202,9 @@ public class StatisticPane extends GridPane {
     }
 
     private void getPieChart() {
-        Stage4barChart.close();
-        Stage4barChart.setScene(new Scene(scoreData.getPieChart(), 500, 500));
-        Stage4barChart.show();
+        Stage4PieChart.close();
+        Stage4PieChart.setScene(new Scene(scoreData.getPieChart(), 500, 500));
+        Stage4PieChart.show();
     }
 }
 

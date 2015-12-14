@@ -6,6 +6,7 @@
 package GUI;
 
 import Data.Student4GUI;
+import Exception.FileContentException;
 import java.io.BufferedOutputStream;
 import static javafx.application.Platform.exit;
 import java.io.File;
@@ -45,7 +46,8 @@ public class MyPane extends BorderPane {
     final private int FILE_NOT_FOUND = 2;  //找不到文件
     final private int FILE_ERROR = 3;      //文件错误
     final private int FILE_READING_SAVING_STATE = 4; //文件读取状态
-    final private int ENCODING_ERROR = 5;
+    final private int ENCODING_ERROR = 5;     //编码错误
+    final private int FILE_CONTENT_ERROR = 3;      //文件内容错误
 
     private TextField searchBar;  //搜索框
     private String keyword4Search;
@@ -149,9 +151,13 @@ public class MyPane extends BorderPane {
                     extraInfo = generateExtraInfo(file);
                     this.setBottom(extraInfo);
                 }
+            } catch (FileContentException ex) {
+                generateAlert(FILE_CONTENT_ERROR);
             } catch (FileNotFoundException ex) {
                 generateAlert(FILE_NOT_FOUND);
             } catch (IOException ex) {
+                generateAlert(FILE_ERROR);
+            } catch (ClassNotFoundException ex) {
                 generateAlert(FILE_ERROR);
             }
         });
@@ -171,9 +177,13 @@ public class MyPane extends BorderPane {
                     extraInfo = generateExtraInfo(file);
                     this.setBottom(extraInfo);
                 }
-            } catch (FileNotFoundException ex) {
+            } catch(FileContentException ex){
+                generateAlert(FILE_CONTENT_ERROR);
+            }catch (FileNotFoundException ex) {
                 generateAlert(FILE_NOT_FOUND);
             } catch (IOException ex) {
+                generateAlert(FILE_ERROR);
+            } catch (ClassNotFoundException ex) {
                 generateAlert(FILE_ERROR);
             }
         });
@@ -244,7 +254,7 @@ public class MyPane extends BorderPane {
                 } catch (FileNotFoundException ex) {
                     generateAlert(FILE_NOT_FOUND);
                 } catch (UnsupportedEncodingException ex) {
-                    generateAlert(FILE_NOT_FOUND);
+                    generateAlert(ENCODING_ERROR);
                 }
                 generateAlert(FILE_READING_SAVING_STATE);
             } //二进制文件的情况
@@ -257,7 +267,6 @@ public class MyPane extends BorderPane {
                     generateAlert(FILE_NOT_FOUND);
                 } catch (IOException ex) {
                     generateAlert(FILE_ERROR);
-
                 }
                 generateAlert(FILE_READING_SAVING_STATE);
             }

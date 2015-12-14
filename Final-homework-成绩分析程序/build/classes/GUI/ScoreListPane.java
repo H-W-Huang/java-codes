@@ -1,6 +1,7 @@
 package GUI;
 
 import Data.Student4GUI;
+import Exception.FileContentException;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -54,7 +55,6 @@ public class ScoreListPane extends Pane {
         this.getChildren().add(table);
 
 //        this.getStylesheets().add(getClass().getResource("css/style1.css").toExternalForm());
-
     }
 
     /**
@@ -92,26 +92,38 @@ public class ScoreListPane extends Pane {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    private void readFileContent(File file, int type) throws FileNotFoundException, IOException {
+    private ArrayList<Student4GUI> readFileContent(File file, int type) throws FileNotFoundException, IOException, ClassNotFoundException, ArrayIndexOutOfBoundsException, FileContentException {
+        
+        ArrayList<Student4GUI> result = new ArrayList<>();
         if (file != null) {
             if (type == TEXT_FILE) {
                 Scanner input = new Scanner(file, "UTF-8");
+                String[] studentData;
+
+                try {
+                    studentData = input.nextLine().split(",");
+                    boolean bool = studentData[0].isEmpty() || studentData[1].isEmpty() || studentData[2].matches("\\D[0,]");
+                    result.add(new Student4GUI(studentData[0], studentData[1], Integer.parseInt(studentData[2])));
+                } catch (Exception ex) {
+//                    dataFromFile.clear();
+//                    data.clear();
+//                    table.setItems(data);
+                    throw new FileContentException();
+                }
+
                 while (input.hasNext()) {
-                    String[] studentData = input.nextLine().split(",");
-                    dataFromFile.add(new Student4GUI(studentData[0], studentData[1], Integer.parseInt(studentData[2])));
+                    studentData = input.nextLine().split(",");
+                    result.add(new Student4GUI(studentData[0], studentData[1], Integer.parseInt(studentData[2])));
                     //                data.add(new Student4GUI(studentData[0], studentData[1], Integer.parseInt(studentData[2])));
                 }
 
             } else {
                 ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
-                try {
-                    dataFromFile = (ArrayList<Student4GUI>) ois.readObject();
-                } catch (ClassNotFoundException ex) {
-                    System.out.println("找不到该类");
-                }
+                result = (ArrayList<Student4GUI>) ois.readObject();
 
             }
         }
+        return result;
     }
 
     /**
@@ -171,12 +183,12 @@ public class ScoreListPane extends Pane {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public void displayDataFromFile(File file, int type) throws FileNotFoundException, IOException {
+    public void displayDataFromFile(File file, int type) throws FileNotFoundException, IOException, ClassNotFoundException, FileContentException {
         if (file != null) {
             if (type == TEXT_FILE) {
-                readFileContent(file, TEXT_FILE);
+                dataFromFile=readFileContent(file, TEXT_FILE);
             } else {
-                readFileContent(file, BINARY_FILE);
+                dataFromFile=readFileContent(file, BINARY_FILE);
             }
             updateData(dataFromFile);
         }
