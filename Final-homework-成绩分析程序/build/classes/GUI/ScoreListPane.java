@@ -27,6 +27,8 @@ public class ScoreListPane extends Pane {
 
     final private int TEXT_FILE = 0;
     final private int BINARY_FILE = 1;
+    private String theClass;
+    private String lecture;
     private TableView<Student4GUI> table = new TableView<>();
     private ObservableList<Student4GUI> data = FXCollections.observableArrayList();
     private ArrayList<Student4GUI> dataFromFile = new ArrayList<>();
@@ -93,36 +95,38 @@ public class ScoreListPane extends Pane {
      * @throws IOException
      */
     private ArrayList<Student4GUI> readFileContent(File file, int type) throws FileNotFoundException, IOException, ClassNotFoundException, ArrayIndexOutOfBoundsException, FileContentException {
-        
+
         ArrayList<Student4GUI> result = new ArrayList<>();
         if (file != null) {
-            if (type == TEXT_FILE) {
-                Scanner input = new Scanner(file, "UTF-8");
-                String[] studentData;
+                
+                System.out.println(theClass+" "+lecture+"");
 
-                try {
-                    studentData = input.nextLine().split(",");
-                    boolean bool = studentData[0].isEmpty() || studentData[1].isEmpty() || studentData[2].matches("\\D[0,]");
-                    result.add(new Student4GUI(studentData[0], studentData[1], Integer.parseInt(studentData[2])));
-                } catch (Exception ex) {
-//                    dataFromFile.clear();
-//                    data.clear();
-//                    table.setItems(data);
-                    throw new FileContentException();
+                if (type == TEXT_FILE) {
+                    Scanner input = new Scanner(file, "UTF-8");
+                    String[] studentData;
+
+                    try {
+                        studentData = input.nextLine().split(",");
+                        boolean bool = studentData[0].isEmpty() || studentData[1].isEmpty() || studentData[2].matches("\\D[0,]");
+                        result.add(new Student4GUI(studentData[0], studentData[1], Integer.parseInt(studentData[2])));
+                    } catch (Exception ex) {
+                        throw new FileContentException();
+                    }
+                                    
+                    while (input.hasNext()) {
+                        studentData = input.nextLine().split(",");
+                        result.add(new Student4GUI(studentData[0], studentData[1], Integer.parseInt(studentData[2])));
+                        //                data.add(new Student4GUI(studentData[0], studentData[1], Integer.parseInt(studentData[2])));
+                    }
+
+                } else {
+                    ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
+                    result = (ArrayList<Student4GUI>) ois.readObject();
+
                 }
-
-                while (input.hasNext()) {
-                    studentData = input.nextLine().split(",");
-                    result.add(new Student4GUI(studentData[0], studentData[1], Integer.parseInt(studentData[2])));
-                    //                data.add(new Student4GUI(studentData[0], studentData[1], Integer.parseInt(studentData[2])));
-                }
-
-            } else {
-                ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
-                result = (ArrayList<Student4GUI>) ois.readObject();
-
             }
-        }
+//        }
+
         return result;
     }
 
@@ -183,16 +187,46 @@ public class ScoreListPane extends Pane {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public void displayDataFromFile(File file, int type) throws FileNotFoundException, IOException, ClassNotFoundException, FileContentException {
+    public void displayDataFromFile(File file, int type) throws FileNotFoundException, IOException, ClassNotFoundException, FileContentException, ArrayIndexOutOfBoundsException {
         if (file != null) {
             if (type == TEXT_FILE) {
-                dataFromFile=readFileContent(file, TEXT_FILE);
+                dataFromFile = readFileContent(file, TEXT_FILE);
             } else {
-                dataFromFile=readFileContent(file, BINARY_FILE);
+                dataFromFile = readFileContent(file, BINARY_FILE);
             }
             updateData(dataFromFile);
         }
         table.setItems(data);
     }
+
+    /**
+     * @return the theClass
+     */
+    public String getTheClass() {
+        return theClass;
+    }
+
+    /**
+     * @param theClass the theClass to set
+     */
+    public void setTheClass(String theClass) {
+        this.theClass = theClass;
+    }
+
+    /**
+     * @return the lecture
+     */
+    public String getLecture() {
+        return lecture;
+    }
+
+    /**
+     * @param lecture the lecture to set
+     */
+    public void setLecture(String lecture) {
+        this.lecture = lecture;
+    }
+    
+    
 
 }

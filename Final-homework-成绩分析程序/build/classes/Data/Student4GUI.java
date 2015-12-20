@@ -18,6 +18,7 @@ public class Student4GUI implements Comparable<Student4GUI>, Serializable {
     private int score;
 
     public Student4GUI(String schoolId, String name, int score) {
+
         this.schoolId = schoolId;
         this.name = name;
         this.score = score;
